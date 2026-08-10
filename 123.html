@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜猜寶貝的性別！</title>
+    <style>
+        body {
+            font-family: '微軟正黑體', -apple-system, BlinkMacSystemFont, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            background: white;
+        }
+        input {
+            padding: 12px;
+            font-size: 16px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        input:focus {
+            border-color: #74b9ff;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn {
+            flex: 1;
+            padding: 15px 0;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .btn-boy { background-color: #74b9ff; }
+        .btn-girl { background-color: #fd79a8; }
+
+        /* 統計圖表區塊樣式 */
+        .stats-box {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #eee;
+        }
+        .stats-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .boy-text { color: #0984e3; }
+        .girl-text { color: #e84393; }
+        .progress-bg {
+            background-color: #fd79a8;
+            border-radius: 20px;
+            height: 20px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+        }
+        .progress-fill {
+            background-color: #74b9ff;
+            height: 100%;
+            width: 50%; /* 預設 50% */
+            transition: width 0.6s ease-in-out;
+        }
+        .total-count {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="mainContainer">
+    <h1>👶 猜猜寶貝是男孩還是女孩？</h1>
+    <p>留下你的名字與預測，猜對的人有機會獲得神秘小禮物喔！</p>
+    
+    <input type="text" id="voterName" placeholder="請輸入你的名字 (如：王小明)">
+    
+    <div class="btn-group">
+        <button class="btn btn-boy" onclick="submitVote('男孩')">👦 我猜男孩</button>
+        <button class="btn btn-girl" onclick="submitVote('女孩')">👧 我猜女孩</button>
+    </div>
+
+    <!-- 即時統計區塊 -->
+    <div class="stats-box">
+        <h3>📊 目前投票戰況</h3>
+        <div class="stats-text">
+            <span class="boy-text" id="boyStat">👦 男孩: 載入中...</span>
+            <span class="girl-text" id="girlStat">👧 女孩: 載入中...</span>
+        </div>
+        <div class="progress-bg">
+            <div class="progress-fill" id="boyBar"></div>
+        </div>
+        <div class="total-count" id="totalCount">累積投票人次：- 人</div>
+    </div>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxhcSVQw07jFopl2D0pMyykRXj1Hz0pJKSSyIVi6JLC497F9I-8_eGNxsu3e3jM6ViPjg/exec';
+
+    // 1. 載入即時統計資料
+    function loadStats() {
+        fetch(scriptURL)
+        .then(response => response.json())
+        .then(data => {
+            const total = data.total;
+            const boyCount = data.boy;
+            const girlCount = data.girl;
+
+            if (total === 0) {
+                document.getElementById('boyStat').innerText = '👦 男孩: 0 票 (0%)';
+                document.getElementById('girlStat').innerText = '👧 女孩: 0 票 (0%)';
+                document.getElementById('boyBar').style.width = '50%';
+                document.getElementById('totalCount').innerText = '目前尚無人投票，快來當第一個！';
+                return;
+            }
+
+            const boyPercent = Math.round((boyCount / total) * 100);
+            const girlPercent = 100 - boyPercent;
+
+            document.getElementById('boyStat').innerText = `👦 男孩: ${boyCount} 票 (${boyPercent}%)`;
+            document.getElementById('girlStat').innerText = `👧 女孩: ${girlCount} 票 (${girlPercent}%)`;
+            document.getElementById('boyBar').style.width = `${boyPercent}%`;
+            document.getElementById('totalCount').innerText = `累積投票人次：${total} 人`;
+        })
+        .catch(error => console.error('無法讀取統計：', error));
+    }
+
+    // 2. 傳送投票
+    function submitVote(gender) {
+        const nameInput = document.getElementById('voterName');
+        const name = nameInput.value.trim();
+        
+        if (!name) {
+            alert('請先輸入你的名字喔！');
+            return;
+        }
+        
+        const btnBoy = document.querySelector('.btn-boy');
+        const btnGirl = document.querySelector('.btn-girl');
+        btnBoy.disabled = true;
+        btnGirl.disabled = true;
+        btnBoy.innerText = '傳送中...';
+        btnGirl.innerText = '傳送中...';
+
+        fetch(scriptURL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ name: name, gender: gender })
+        })
+        .then(response => response.text())
+        .then(text => {
+            alert(`謝謝 ${name}！你預測寶寶是「${gender}」🎉`);
+            // 重新載入最新統計資料
+            loadStats();
+            // 替換上方輸入區塊為感謝文字
+            document.getElementById('mainContainer').innerHTML = `
+                <h2>謝謝參與！<br>我們即將揭曉答案 🍼</h2>
+                <div class="stats-box" id="newStatsBox"></div>
+            `;
+            // 將統計區塊移至感謝頁面
+            document.getElementById('newStatsBox').replaceWith(document.querySelector('.stats-box'));
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('傳送失敗，請檢查網路連線。');
+            btnBoy.disabled = false;
+            btnGirl.disabled = false;
+            btnBoy.innerText = '👦 我猜男孩';
+            btnGirl.innerText = '👧 我猜女孩';
+        });
+    }
+
+    // 當網頁開啟時自動執行讀取統計
+    window.onload = loadStats;
+</script>
+
+</body>
+</html>
