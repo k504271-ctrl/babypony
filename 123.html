@@ -13,7 +13,7 @@
 
         body {
             font-family: 'PingFang TC', '微軟正黑體', -apple-system, sans-serif;
-            background: linear-gradient(180deg, #051923 0%, #003554 50%, #006494 100%);
+            background: linear-gradient(180deg, #020d18 0%, #00223e 40%, #004b76 80%, #006994 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -24,25 +24,38 @@
             overflow-x: hidden;
         }
 
-        /* 海洋背景泡泡與裝飾 */
-        .ocean-decor {
+        /* 第一頁：水族館游動生物動畫 */
+        .swimming-fish {
             position: absolute;
-            font-size: 26px;
-            z-index: 1;
+            font-size: 28px;
             user-select: none;
-            opacity: 0.8;
+            z-index: 2;
+            pointer-events: none;
+            animation: swim 12s infinite linear;
         }
-        .decor-left { top: 15px; left: 15px; }
-        .decor-right { top: 15px; right: 15px; }
+        .fish1 { top: 10%; left: -10%; animation-delay: 0s; }
+        .fish2 { top: 25%; right: -10%; animation-direction: reverse; animation-duration: 15s; }
+        .jellyfish { top: 75%; left: 5%; animation: floatJelly 6s infinite ease-in-out; font-size: 32px; }
 
-        /* 主卡片 (海底深藍玻璃質感) */
+        @keyframes swim {
+            0% { transform: translateX(0) scaleX(1); }
+            50% { transform: translateX(105vw) scaleX(1); }
+            50.1% { transform: translateX(105vw) scaleX(-1); }
+            100% { transform: translateX(-10vw) scaleX(-1); }
+        }
+        @keyframes floatJelly {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* 主卡片 (水族館觀景窗玻璃質感) */
         .main-card {
             width: 100%;
             max-width: 440px;
-            background: rgba(10, 35, 60, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(8, 28, 48, 0.88);
+            backdrop-filter: blur(12px);
             border: 2px solid #00f2fe;
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.25), inset 0 0 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3), inset 0 0 20px rgba(0, 242, 254, 0.15);
             border-radius: 28px;
             padding: 35px 22px;
             text-align: center;
@@ -64,23 +77,36 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 標題與圖示 */
+        /* 第一頁：水族館專屬標題 */
+        .aquarium-badge {
+            display: inline-block;
+            background: rgba(0, 242, 254, 0.15);
+            border: 1px solid #00f2fe;
+            color: #00f2fe;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
         .icon-header {
             font-size: 55px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: inline-block;
-            filter: drop-shadow(0 4px 10px rgba(0, 242, 254, 0.4));
+            filter: drop-shadow(0 4px 12px rgba(0, 242, 254, 0.5));
         }
 
         .main-title {
-            font-size: 36px;
+            font-size: 35px;
             font-weight: 900;
             line-height: 1.25;
             margin-bottom: 15px;
             background: linear-gradient(180deg, #ffffff 0%, #4facfe 50%, #00f2fe 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
             letter-spacing: 1px;
         }
 
@@ -91,7 +117,7 @@
             margin-bottom: 25px;
         }
 
-        /* 經典海洋風按鈕 */
+        /* 經典海洋/水族館風按鈕 */
         .btn-ocean {
             width: 100%;
             padding: 16px;
@@ -102,7 +128,7 @@
             border: 2px solid #ffffff;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0, 242, 254, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 242, 254, 0.35);
             transition: transform 0.15s, filter 0.2s;
             margin-top: 10px;
         }
@@ -214,15 +240,15 @@
             cursor: not-allowed;
         }
 
-        /* 最終結果公佈卡片 */
+        /* 最終結果與戰況統計卡片 */
         .result-card {
             background: rgba(255, 255, 255, 0.08);
             border: 2px dashed #00f2fe;
             border-radius: 18px;
             padding: 20px;
             margin-top: 15px;
-            line-height: 1.8;
-            font-size: 16px;
+            line-height: 1.7;
+            font-size: 15px;
             color: #e0f7fa;
         }
         .highlight-text {
@@ -230,22 +256,55 @@
             font-size: 20px;
             font-weight: bold;
         }
+
+        .stats-box {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(0, 242, 254, 0.4);
+            text-align: left;
+        }
+        .stats-text {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .progress-bg {
+            background-color: #ff85a2;
+            border-radius: 20px;
+            height: 18px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            border: 1px solid #00f2fe;
+        }
+        .progress-fill {
+            background-color: #4facfe;
+            height: 100%;
+            width: 50%;
+            transition: width 0.6s ease-in-out;
+        }
     </style>
 </head>
 <body>
 
-    <div class="ocean-decor decor-left">🫧 🐠</div>
-    <div class="ocean-decor decor-right">🐬 🐚</div>
+    <!-- 背景動態游魚與水母 -->
+    <div class="swimming-fish fish1">🐠 🐡 🪸</div>
+    <div class="swimming-fish fish2">🐬 🦈 🫧</div>
+    <div class="swimming-fish jellyfish">🪼</div>
 
     <div class="main-card" id="mainContainer">
 
-        <!-- 關卡 0：首頁 -->
+        <!-- 關卡 0：首頁 (水族館風格) -->
         <div class="step active" id="step0">
-            <div class="icon-header">🐙</div>
+            <div class="aquarium-badge">🏛️ 海底水族館冒險</div>
+            <br>
+            <div class="icon-header">🐠</div>
             <h1 class="main-title">Baby<br>guessing大挑戰</h1>
-            <p class="subtitle">探索海底世界，連續回答趣味關卡<br>一起猜猜寶貝的性別吧！</p>
+            <p class="subtitle">各位叔叔阿姨舅舅阿姨們注意啦！📢這段時間大家是不是都在默默觀察我的肚子？答案即將揭曉！！<br>一起猜猜寶貝的性別吧 🫧</p>
             
-            <button class="btn-ocean" onclick="goToStep(1)">開始挑戰 🌊</button>
+            <button class="btn-ocean" onclick="goToStep(1)">開始潛水探索 🤿</button>
         </div>
 
         <!-- 關卡 1：性別故事 -->
@@ -275,7 +334,7 @@
         <!-- 關卡 2：超音波照片 -->
         <div class="step" id="step2">
             <h2 style="color: #00f2fe; margin-bottom: 10px;">📸 第二關：寶貝超音波照片</h2>
-            <p style="font-size: 13px; color: #b2ebf2;">仔細看看，你覺得寶貝像爸爸還是媽媽？</p>
+            <p style="font-size: 13px; color: #b2ebf2;">仔細看看，你覺得寶貝像爸爸還是媽媽？(嗯～都不像）</p>
 
             <div class="ultrasound-frame">
                 <img src="ultrasound.jpg" alt="寶貝超音波照片" class="ultrasound-img" onerror="this.src='https://via.placeholder.com/400x300/002244/FFFFFF?text=Baby+Ultrasound'">
@@ -298,14 +357,14 @@
 
         <!-- 關卡 4：媽媽的飲食口味 (正確答案：A) -->
         <div class="step" id="step4">
-            <h2 style="color: #00f2fe; margin-bottom: 10px;">🍟 第四關：媽媽的神秘胃口</h2>
+            <h2 style="color: #00f2fe; margin-bottom: 10px;">🤤第四關：媽媽的神秘胃口</h2>
             <p style="font-size: 15px; font-weight: bold; color: #ffffff; margin-bottom: 18px;">
                 媽媽最近瘋狂渴望吃什麼口味的食物？
             </p>
 
             <button class="quiz-option" onclick="checkAnswer(4, 'A')">A. 無酸不歡！或是突然超愛薯條等鹹食。🍋</button>
             <button class="quiz-option" onclick="checkAnswer(4, 'B')">B. 螞蟻人上身，瘋狂想吃甜點，或是無辣不歡。🍰</button>
-            <button class="quiz-option" onclick="checkAnswer(4, 'C')">C. 什麼都吃，純粹就是媽媽肚子餓了 🤤</button>
+            <button class="quiz-option" onclick="checkAnswer(4, 'C')">C. 什麼都吃，純粹就是媽媽肚子餓了 </button>
         </div>
 
         <!-- 關卡 5：終極預測與投票 -->
@@ -336,7 +395,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 選擇題答案檢查機制
+    // 選擇題答案檢查機制 (A 為正確答案)
     function checkAnswer(currentStep, choice) {
         if (currentStep === 3) {
             if (choice === 'A') {
@@ -355,7 +414,7 @@
         }
     }
 
-    // 提交投票資料並顯示揭曉訊息
+    // 提交投票資料並顯示揭曉與統計
     function submitVote(gender) {
         const nameInput = document.getElementById('voterName');
         const name = nameInput.value.trim();
@@ -380,18 +439,7 @@
         .then(response => response.text())
         .then(text => {
             alert(`謝謝 ${name}！你預測寶寶是「${gender}」🎉`);
-            
-            // 提交成功後，展示最終揭曉結果 (替換整個畫面)
-            document.getElementById('mainContainer').innerHTML = `
-                <div class="icon-header">🛸</div>
-                <h2 style="color: #00f2fe; margin-bottom: 15px;">謝謝參與！</h2>
-                
-                <div class="result-card">
-                    <p class="highlight-text">我的預產期是 1/30 喔！🍼</p>
-                    <br>
-                    <p>會是個大家公認充滿創意與獨特見解的寶貝<br><strong>（外星寶寶 👽✨）</strong></p>
-                </div>
-            `;
+            showResultPage();
         })
         .catch(error => {
             console.error('Error!', error.message);
@@ -400,6 +448,64 @@
             btnGirl.disabled = false;
             btnBoy.innerText = '👦 我猜男孩';
             btnGirl.innerText = '👧 我猜女孩';
+        });
+    }
+
+    // 顯示最終結果與即時數據統計
+    function showResultPage() {
+        // 先顯示文字卡片
+        document.getElementById('mainContainer').innerHTML = `
+            <div class="icon-header">🛸</div>
+            <h2 style="color: #00f2fe; margin-bottom: 15px;">謝謝參與！</h2>
+            
+            <div class="result-card">
+                <p class="highlight-text">我的預產期是 1/30 喔！🍼</p>
+                <br>
+                <p>會是個大家公認充滿創意與獨特見解的寶貝<br><strong>（外星寶寶 👽✨）</strong></p>
+
+                <div class="stats-box">
+                    <h4 style="color: #00f2fe; margin-bottom: 10px; text-align: center;">📊 目前預測投票戰況</h4>
+                    <div class="stats-text">
+                        <span style="color: #4facfe;" id="boyStat">👦 男孩: 載入中...</span>
+                        <span style="color: #ff85a2;" id="girlStat">👧 女孩: 載入中...</span>
+                    </div>
+                    <div class="progress-bg">
+                        <div class="progress-fill" id="boyBar"></div>
+                    </div>
+                    <p style="margin-top: 8px; font-size: 12px; color: #b2ebf2; text-align: center;" id="totalCount">累積投票人次：- 人</p>
+                </div>
+            </div>
+        `;
+
+        // 抓取即時統計數據
+        fetch(scriptURL)
+        .then(response => response.json())
+        .then(data => {
+            const total = data.total;
+            const boyCount = data.boy;
+            const girlCount = data.girl;
+
+            if (total === 0) {
+                document.getElementById('boyStat').innerText = '👦 男孩: 0 票';
+                document.getElementById('girlStat').innerText = '👧 女孩: 0 票';
+                document.getElementById('boyBar').style.width = '50%';
+                document.getElementById('totalCount').innerText = '你是第一個投票的人喔！';
+                return;
+            }
+
+            const boyPercent = Math.round((boyCount / total) * 100);
+            const girlPercent = 100 - boyPercent;
+
+            document.getElementById('boyStat').innerText = `👦 男孩: ${boyCount} 票 (${boyPercent}%)`;
+            document.getElementById('girlStat').innerText = `👧 女孩: ${girlCount} 票 (${girlPercent}%)`;
+            document.getElementById('boyBar').style.width = `${boyPercent}%`;
+            document.getElementById('totalCount').innerText = `累積投票人次：${total} 人`;
+        })
+        .catch(error => {
+            console.error('統計讀取失敗：', error);
+            document.getElementById('boyStat').innerText = '👦 男孩: - 票';
+            document.getElementById('girlStat').innerText = '👧 女孩: - 票';
+            document.getElementById('totalCount').innerText = '暫時無法載入即時統計';
         });
     }
 </script>
