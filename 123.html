@@ -3,29 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>猜猜寶貝的性別！</title>
+    <title>Baby guessing大挑戰</title>
     <style>
         * {
             box-sizing: border-box;
-        }
-        body {
-            font-family: '微軟正黑體', -apple-system, BlinkMacSystemFont, sans-serif;
-            text-align: center;
-            background-color: #f8f9fa;
             margin: 0;
-            padding: 30px 15px;
-            color: #333;
-        }
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            background: white;
+            padding: 0;
         }
 
-        /* 步驟切換控制 */
+        body {
+            font-family: 'PingFang TC', '微軟正黑體', -apple-system, sans-serif;
+            background-color: #5c0202;
+            background-image: radial-gradient(circle at center, #8a0606 0%, #400000 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 頂部燈籠裝飾 */
+        .lantern {
+            position: absolute;
+            top: 0;
+            font-size: 28px;
+            z-index: 10;
+        }
+        .lantern-left { left: 15px; }
+        .lantern-right { right: 15px; }
+
+        /* 主卡片 (紅包外框風格) */
+        .main-card {
+            width: 100%;
+            max-width: 420px;
+            background: linear-gradient(180deg, #990000 0%, #660000 100%);
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), inset 0 0 15px rgba(0, 0, 0, 0.5);
+            border-radius: 28px;
+            padding: 35px 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* 關卡切換控制 */
         .step {
             display: none;
         }
@@ -39,196 +62,277 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 第一頁：故事樣式 */
+        /* 首頁圖示與標題風格 */
+        .red-envelope-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+        }
+
+        .main-title {
+            font-size: 38px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            background: linear-gradient(180deg, #fff3a1 0%, #ffd700 50%, #cca000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #ffeaa7;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* 金黃色主要按鈕 */
+        .btn-gold {
+            width: 100%;
+            padding: 16px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #5a0000;
+            background: linear-gradient(180deg, #ffe066 0%, #f5b041 100%);
+            border: 2px solid #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.1s, filter 0.2s;
+            margin-bottom: 15px;
+        }
+        .btn-gold:active {
+            transform: scale(0.97);
+        }
+
+        /* 次要按鈕 (暗紅金邊) */
+        .btn-sub {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffe066;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1.5px solid #f5b041;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-sub:active {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        /* 第一關：故事卡片樣式 */
         .story-card {
             text-align: left;
-            background: #fdfaf6;
-            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 15px;
             border-radius: 12px;
             margin-bottom: 15px;
             border-left: 5px solid #ccc;
         }
-        .story-card.boy {
-            border-left-color: #74b9ff;
-        }
-        .story-card.girl {
-            border-left-color: #fd79a8;
-        }
+        .story-card.boy { border-left-color: #3498db; }
+        .story-card.girl { border-left-color: #e84393; }
         .story-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 5px;
         }
-        .story-title.boy { color: #0984e3; }
-        .story-title.girl { color: #e84393; }
+        .story-title.boy { color: #2980b9; }
+        .story-title.girl { color: #d63031; }
 
-        /* 第二頁：超音波照片樣式 */
+        /* 第二關：超音波照片樣式 */
         .ultrasound-frame {
-            margin: 20px 0;
-            padding: 10px;
+            margin: 15px 0 20px;
+            padding: 8px;
             background: #fff;
-            border: 1px solid #ddd;
             border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .ultrasound-img {
             width: 100%;
-            max-height: 350px;
+            max-height: 280px;
             object-fit: cover;
             border-radius: 8px;
+            display: block;
         }
 
-        /* 第三頁：輸入框與按鈕樣式 */
+        /* 第三關：表單與投票按鈕 */
         input {
-            padding: 12px;
-            font-size: 16px;
             width: 100%;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            outline: none;
-        }
-        input:focus {
-            border-color: #74b9ff;
-        }
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-        .btn {
-            padding: 14px 20px;
+            padding: 14px;
             font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #ffd700;
+            margin-bottom: 20px;
+            outline: none;
+            text-align: center;
+        }
+        .btn-vote-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .btn-boy {
+            flex: 1;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            background: #3498db;
+            color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .btn-girl {
+            flex: 1;
+            padding: 14px;
+            font-size: 18px;
             font-weight: bold;
-            transition: transform 0.2s, opacity 0.2s;
-            width: 100%;
+            background: #e84393;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .btn:active {
-            transform: scale(0.97);
-        }
-        .btn:disabled {
+        .btn-boy:disabled, .btn-girl:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
-        .btn-next { background-color: #6c5ce7; margin-top: 15px; }
-        .btn-boy { background-color: #74b9ff; }
-        .btn-girl { background-color: #fd79a8; }
 
-        /* 統計圖表區塊樣式 */
+        /* 即時統計數據區塊 */
         .stats-box {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px dashed #eee;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255, 215, 0, 0.4);
+            font-size: 14px;
         }
         .stats-text {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
             font-weight: bold;
             margin-bottom: 8px;
         }
-        .boy-text { color: #0984e3; }
-        .girl-text { color: #e84393; }
         .progress-bg {
-            background-color: #fd79a8;
+            background-color: #e84393;
             border-radius: 20px;
             height: 18px;
             width: 100%;
             overflow: hidden;
             display: flex;
+            border: 1px solid #ffd700;
         }
         .progress-fill {
-            background-color: #74b9ff;
+            background-color: #3498db;
             height: 100%;
             width: 50%;
             transition: width 0.6s ease-in-out;
         }
-        .total-count {
-            margin-top: 10px;
-            font-size: 13px;
-            color: #888;
+
+        .footer-version {
+            margin-top: 25px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
-<div class="container" id="mainContainer">
+    <div class="lantern lantern-left">🏮</div>
+    <div class="lantern lantern-right">🏮</div>
 
-    <!-- 第一關：性別圖示的故事 -->
-    <div class="step active" id="step1">
-        <h2>✨ 性別符號的小故事</h2>
-        <p style="font-size: 14px; color: #666; margin-bottom: 20px;">
-            性別符號（♂ 與 ♀）最早源自古希臘羅馬的天文與神話符號。
-        </p>
+    <div class="main-card" id="mainContainer">
 
-        <div class="story-card boy">
-            <div class="story-title boy">♂ 男性符號</div>
-            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #444;">
-                圖案是一個圓圈加上一個向上的箭頭。在古羅馬神話中，代表戰神瑪爾斯（Mars）的長矛與盾牌。因為戰神象徵剛強、力量與戰鬥，後來就用這個圖樣來代表男性。
+        <!-- 關卡 0：首頁 (完全還原圖片風格) -->
+        <div class="step active" id="step0">
+            <div class="red-envelope-icon">🧧</div>
+            <h1 class="main-title">Baby<br>guessing大挑戰</h1>
+            <p class="subtitle">連續答對關卡並預測寶貝性別<br>即可獲得驚喜小禮物！</p>
+            
+            <button class="btn-gold" onclick="goToStep(1)">開始挑戰 👶</button>
+            <button class="btn-sub" onclick="goToStep(3)">直接進行猜性別</button>
+            
+            <div class="footer-version">v1.2.8 | 日安七系 Bever System Tech Service</div>
+        </div>
+
+        <!-- 關卡 1：性別故事 -->
+        <div class="step" id="step1">
+            <h2 style="color: #ffd700; margin-bottom: 10px;">✨ 第一關：性別符號由來</h2>
+            <p style="font-size: 13px; color: #ffeaa7; margin-bottom: 15px;">
+                性別符號（♂ 與 ♀）最早源自古希臘羅馬的天文與神話符號。
             </p>
-        </div>
 
-        <div class="story-card girl">
-            <div class="story-title girl">♀ 女性符號</div>
-            <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #444;">
-                圖案是一個圓圈下方加上一個十字。在古羅馬神話中，代表愛與美之女神維娜斯（Venus）手裡拿著的金色圓面鏡。因為美神象徵美麗與柔和，後來就用這個圖樣來代表女性。
-            </p>
-        </div>
-
-        <button class="btn btn-next" onclick="goToStep(2)">看寶貝的第一張照片 ➔</button>
-    </div>
-
-    <!-- 第二關：超音波照片 -->
-    <div class="step" id="step2">
-        <h2>📸 寶貝的超音波照片</h2>
-        <p style="font-size: 14px; color: #666;">你看得出來寶貝像爸爸還是像媽媽嗎？</p>
-
-        <div class="ultrasound-frame">
-            <!-- ⚠️ 請將 src 替換為你的超音波照片檔名或網址 -->
-            <img src="ultrasound.jpg" alt="寶貝超音波照片" class="ultrasound-img" id="babyPhoto" onerror="this.src='https://via.placeholder.com/400x300?text=Baby+Ultrasound'">
-        </div>
-
-        <button class="btn btn-next" onclick="goToStep(3)">準備好了，去猜性別！ ➔</button>
-    </div>
-
-    <!-- 第三關：猜性別與投票 -->
-    <div class="step" id="step3">
-        <h2>👶 猜猜寶貝是男孩還是女孩？</h2>
-        <p style="font-size: 14px; color: #666;">留下你的名字與預測，猜對的人有機會獲得神秘小禮物喔！</p>
-        
-        <input type="text" id="voterName" placeholder="請輸入你的名字 (如：王小明)">
-        
-        <div class="btn-group">
-            <button class="btn btn-boy" onclick="submitVote('男孩')">👦 我猜男孩</button>
-            <button class="btn btn-girl" onclick="submitVote('女孩')">👧 我猜女孩</button>
-        </div>
-
-        <!-- 即時統計區塊 -->
-        <div class="stats-box">
-            <h3>📊 目前投票戰況</h3>
-            <div class="stats-text">
-                <span class="boy-text" id="boyStat">👦 男孩: 載入中...</span>
-                <span class="girl-text" id="girlStat">👧 女孩: 載入中...</span>
+            <div class="story-card boy">
+                <div class="story-title boy">♂ 男性符號</div>
+                <p style="font-size: 13px; line-height: 1.5;">
+                    圓圈加上向上的箭頭。代表戰神瑪爾斯（Mars）的長矛與盾牌，象徵剛強與力量。
+                </p>
             </div>
-            <div class="progress-bg">
-                <div class="progress-fill" id="boyBar"></div>
-            </div>
-            <div class="total-count" id="totalCount">累積投票人次：- 人</div>
-        </div>
-    </div>
 
-</div>
+            <div class="story-card girl">
+                <div class="story-title girl">♀ 女性符號</div>
+                <p style="font-size: 13px; line-height: 1.5;">
+                    圓圈下方加上十字。代表愛與美之女神維娜斯（Venus）手持的金色圓鏡，象徵美麗與柔和。
+                </p>
+            </div>
+
+            <button class="btn-gold" onclick="goToStep(2)">前往下一關：超音波照片 ➔</button>
+        </div>
+
+        <!-- 關卡 2：超音波照片 -->
+        <div class="step" id="step2">
+            <h2 style="color: #ffd700; margin-bottom: 10px;">📸 第二關：寶貝超音波照片</h2>
+            <p style="font-size: 13px; color: #ffeaa7;">仔細看看，你覺得寶貝像爸爸還是媽媽？</p>
+
+            <div class="ultrasound-frame">
+                <!-- 將 ultrasound.jpg 替換成你的超音波照片檔名 -->
+                <img src="ultrasound.jpg" alt="寶貝超音波照片" class="ultrasound-img" onerror="this.src='https://via.placeholder.com/400x300/333333/FFFFFF?text=Baby+Ultrasound'">
+            </div>
+
+            <button class="btn-gold" onclick="goToStep(3)">進行終極預測 ➔</button>
+        </div>
+
+        <!-- 關卡 3：終極投票與戰況 -->
+        <div class="step" id="step3">
+            <h2 style="color: #ffd700; margin-bottom: 10px;">👶 終極預測：猜猜性別</h2>
+            <p style="font-size: 13px; color: #ffeaa7; margin-bottom: 15px;">請輸入名字並選擇你心中的預測：</p>
+            
+            <input type="text" id="voterName" placeholder="請輸入你的名字 (如：王小明)">
+            
+            <div class="btn-vote-group">
+                <button class="btn-boy" onclick="submitVote('男孩')">👦 我猜男孩</button>
+                <button class="btn-girl" onclick="submitVote('女孩')">👧 我猜女孩</button>
+            </div>
+
+            <!-- 即時統計戰況區塊 -->
+            <div class="stats-box">
+                <h3 style="color: #ffd700; margin-bottom: 10px;">📊 目前投票戰況</h3>
+                <div class="stats-text">
+                    <span style="color: #74b9ff;" id="boyStat">👦 男孩: 載入中...</span>
+                    <span style="color: #fd79a8;" id="girlStat">👧 女孩: 載入中...</span>
+                </div>
+                <div class="progress-bg">
+                    <div class="progress-fill" id="boyBar"></div>
+                </div>
+                <div style="margin-top: 10px; font-size: 12px; color: #ffeaa7;" id="totalCount">累積投票人次：- 人</div>
+            </div>
+        </div>
+
+    </div>
 
 <script>
+    // 你的 Google Apps Script 部署網址
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxhcSVQw07jFopl2D0pMyykRXj1Hz0pJKSSyIVi6JLC497F9I-8_eGNxsu3e3jM6ViPjg/exec';
 
-    // 切換關卡函式
+    // 關卡切換邏輯
     function goToStep(stepNumber) {
         document.querySelectorAll('.step').forEach(step => {
             step.classList.remove('active');
@@ -237,7 +341,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 載入即時統計資料
+    // 讀取 Google 試算表統計資料
     function loadStats() {
         fetch(scriptURL)
         .then(response => response.json())
@@ -262,10 +366,15 @@
             document.getElementById('boyBar').style.width = `${boyPercent}%`;
             document.getElementById('totalCount').innerText = `累積投票人次：${total} 人`;
         })
-        .catch(error => console.error('無法讀取統計：', error));
+        .catch(error => {
+            console.error('無法讀取統計：', error);
+            document.getElementById('boyStat').innerText = '👦 男孩: - 票';
+            document.getElementById('girlStat').innerText = '👧 女孩: - 票';
+            document.getElementById('totalCount').innerText = '無法載入統計資料';
+        });
     }
 
-    // 傳送投票
+    // 提交投票資料
     function submitVote(gender) {
         const nameInput = document.getElementById('voterName');
         const name = nameInput.value.trim();
@@ -292,7 +401,8 @@
             alert(`謝謝 ${name}！你預測寶寶是「${gender}」🎉`);
             loadStats();
             document.getElementById('mainContainer').innerHTML = `
-                <h2>謝謝參與！<br>我們即將揭曉答案 🍼</h2>
+                <div class="red-envelope-icon">🍼</div>
+                <h2 style="color: #ffd700; margin-bottom: 15px;">謝謝參與！<br>我們即將揭曉答案！</h2>
                 <div class="stats-box" id="newStatsBox"></div>
             `;
             document.getElementById('newStatsBox').replaceWith(document.querySelector('.stats-box'));
@@ -307,7 +417,7 @@
         });
     }
 
-    // 開啟網頁時自動讀取統計資料
+    // 開啟頁面時載入統計
     window.onload = loadStats;
 </script>
 
