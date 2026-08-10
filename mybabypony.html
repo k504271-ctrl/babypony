@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜猜寶貝的性別！</title>
+    <style>
+        body {
+            font-family: '微軟正黑體', sans-serif;
+            text-align: center;
+            background-color: #fdfdfd;
+            padding: 50px 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: white;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            color: white;
+            transition: transform 0.2s;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .btn-boy { background-color: #74b9ff; }
+        .btn-girl { background-color: #fd79a8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>👶 猜猜寶貝是男孩還是女孩？</h1>
+    <p>留下你的名字與預測，猜對的人有機會獲得神秘小禮物喔！</p>
+    
+    <input type="text" id="voterName" placeholder="請輸入你的名字 (如：王小明)">
+    
+    <br>
+    <button class="btn btn-boy" onclick="submitVote('男孩')">👦 我猜是男孩！</button>
+    <button class="btn btn-girl" onclick="submitVote('女孩')">👧 我猜是女孩！</button>
+</div>
+
+<script>
+    function submitVote(gender) {
+        const name = document.getElementById('voterName').value;
+        if (!name) {
+            alert('請先輸入你的名字喔！');
+            return;
+        }
+        
+        // 這裡未來可以加入將資料傳送到 Google Sheets 的程式碼
+        alert(`謝謝 ${name}！你預測寶寶是「${gender}」🎉\n(資料已記錄)`);
+        
+        // 投票後可以將按鈕鎖定或隱藏
+    }
+</script>
+
+</body>
+</html>
