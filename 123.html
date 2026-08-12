@@ -24,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* 第一頁：水族館游動生物動畫 */
+        /* 水族館動態背景生物 */
         .swimming-fish {
             position: absolute;
             font-size: 28px;
@@ -48,7 +48,7 @@
             50% { transform: translateY(-20px); }
         }
 
-        /* 主卡片 (水族館觀景窗玻璃質感) */
+        /* 水族館玻璃主卡片 */
         .main-card {
             width: 100%;
             max-width: 440px;
@@ -77,7 +77,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 第一頁：水族館專屬標題 */
         .aquarium-badge {
             display: inline-block;
             background: rgba(0, 242, 254, 0.15);
@@ -117,7 +116,6 @@
             margin-bottom: 25px;
         }
 
-        /* 經典海洋/水族館風按鈕 */
         .btn-ocean {
             width: 100%;
             padding: 16px;
@@ -136,7 +134,6 @@
             transform: scale(0.97);
         }
 
-        /* 選擇題選項按鈕 */
         .quiz-option {
             width: 100%;
             padding: 14px 16px;
@@ -157,7 +154,6 @@
             transform: translateX(4px);
         }
 
-        /* 第一關：故事卡片 */
         .story-card {
             text-align: left;
             background: rgba(255, 255, 255, 0.95);
@@ -177,7 +173,6 @@
         .story-title.boy { color: #0288d1; }
         .story-title.girl { color: #d81b60; }
 
-        /* 第二關：超音波照片 */
         .ultrasound-frame {
             margin: 15px 0 20px;
             padding: 8px;
@@ -193,7 +188,6 @@
             display: block;
         }
 
-        /* 預測表單與投票按鈕 */
         input {
             width: 100%;
             padding: 14px;
@@ -240,7 +234,6 @@
             cursor: not-allowed;
         }
 
-        /* 最終結果與戰況統計卡片 */
         .result-card {
             background: rgba(255, 255, 255, 0.08);
             border: 2px dashed #00f2fe;
@@ -289,20 +282,19 @@
 </head>
 <body>
 
-    <!-- 背景動態游魚與水母 -->
     <div class="swimming-fish fish1">🐠 🐡 🪸</div>
     <div class="swimming-fish fish2">🐬 🦈 🫧</div>
     <div class="swimming-fish jellyfish">🪼</div>
 
     <div class="main-card" id="mainContainer">
 
-        <!-- 關卡 0：首頁 (水族館風格) -->
+        <!-- 關卡 0：首頁 -->
         <div class="step active" id="step0">
             <div class="aquarium-badge">🏛️ 海底水族館冒險</div>
             <br>
             <div class="icon-header">🐠</div>
             <h1 class="main-title">Baby<br>guessing大挑戰</h1>
-            <p class="subtitle">各位叔叔阿姨舅舅阿姨們注意啦！📢這段時間大家是不是都在默默觀察我的肚子？答案即將揭曉！！<br>一起猜猜寶貝的性別吧 🫧</p>
+            <p class="subtitle">歡迎來到海底水族館！<br>連續探索關卡，一起猜猜寶貝的性別吧 🫧</p>
             
             <button class="btn-ocean" onclick="goToStep(1)">開始潛水探索 🤿</button>
         </div>
@@ -334,7 +326,7 @@
         <!-- 關卡 2：超音波照片 -->
         <div class="step" id="step2">
             <h2 style="color: #00f2fe; margin-bottom: 10px;">📸 第二關：寶貝超音波照片</h2>
-            <p style="font-size: 13px; color: #b2ebf2;">仔細看看，你覺得寶貝像爸爸還是媽媽？(嗯～都不像）</p>
+            <p style="font-size: 13px; color: #b2ebf2;">仔細看看，你覺得寶貝像爸爸還是媽媽？</p>
 
             <div class="ultrasound-frame">
                 <img src="ultrasound.jpg" alt="寶貝超音波照片" class="ultrasound-img" onerror="this.src='https://via.placeholder.com/400x300/002244/FFFFFF?text=Baby+Ultrasound'">
@@ -343,7 +335,7 @@
             <button class="btn-ocean" onclick="goToStep(3)">進入第三關：氣色測驗 ➔</button>
         </div>
 
-        <!-- 關卡 3：媽媽的氣色變化 (正確答案：A) -->
+        <!-- 關卡 3：媽媽的氣色變化 -->
         <div class="step" id="step3">
             <h2 style="color: #00f2fe; margin-bottom: 10px;">🌸 第三關：觀察媽媽的狀態</h2>
             <p style="font-size: 15px; font-weight: bold; color: #ffffff; margin-bottom: 18px;">
@@ -355,20 +347,32 @@
             <button class="quiz-option" onclick="checkAnswer(3, 'C')">C. 沒什麼特別感覺，跟孕前差不多。😐</button>
         </div>
 
-        <!-- 關卡 4：媽媽的飲食口味 (正確答案：A) -->
+        <!-- 關卡 4：媽媽的飲食口味 -->
         <div class="step" id="step4">
-            <h2 style="color: #00f2fe; margin-bottom: 10px;">🤤第四關：媽媽的神秘胃口</h2>
+            <h2 style="color: #00f2fe; margin-bottom: 10px;"> 第四關：媽媽的神秘胃口</h2>
             <p style="font-size: 15px; font-weight: bold; color: #ffffff; margin-bottom: 18px;">
                 媽媽最近瘋狂渴望吃什麼口味的食物？
             </p>
 
             <button class="quiz-option" onclick="checkAnswer(4, 'A')">A. 無酸不歡！或是突然超愛薯條等鹹食。🍋</button>
             <button class="quiz-option" onclick="checkAnswer(4, 'B')">B. 螞蟻人上身，瘋狂想吃甜點，或是無辣不歡。🍰</button>
-            <button class="quiz-option" onclick="checkAnswer(4, 'C')">C. 什麼都吃，純粹就是媽媽肚子餓了 </button>
+            <button class="quiz-option" onclick="checkAnswer(4, 'C')">C. 什麼都吃，純粹就是媽媽肚子餓了 🤤</button>
         </div>
 
-        <!-- 關卡 5：終極預測與投票 -->
+        <!-- 關卡 5：爬山經歷 (正確答案：A. 玉山) -->
         <div class="step" id="step5">
+            <h2 style="color: #00f2fe; margin-bottom: 10px;">⛰️ 第五關：小小登山客</h2>
+            <p style="font-size: 15px; font-weight: bold; color: #ffffff; margin-bottom: 18px;">
+                寶貝跟我們一起去爬過什麼山？
+            </p>
+
+            <button class="quiz-option" onclick="checkAnswer(5, 'A')">A. 玉山 🏔️</button>
+            <button class="quiz-option" onclick="checkAnswer(5, 'B')">B. 八通關山 🧗</button>
+            <button class="quiz-option" onclick="checkAnswer(5, 'C')">C. 合歡山 🏕️</button>
+        </div>
+
+        <!-- 關卡 6：終極預測與投票 -->
+        <div class="step" id="step6">
             <h2 style="color: #00f2fe; margin-bottom: 10px;">👶 終極預測：猜猜性別</h2>
             <p style="font-size: 14px; color: #b2ebf2; margin-bottom: 18px;">請留下你的名字，並選出你心中的預測：</p>
             
@@ -383,10 +387,8 @@
     </div>
 
 <script>
-    // 你的 Google Apps Script 網址
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxhcSVQw07jFopl2D0pMyykRXj1Hz0pJKSSyIVi6JLC497F9I-8_eGNxsu3e3jM6ViPjg/exec';
 
-    // 關卡切換邏輯
     function goToStep(stepNumber) {
         document.querySelectorAll('.step').forEach(step => {
             step.classList.remove('active');
@@ -395,7 +397,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 選擇題答案檢查機制 (A 為正確答案)
     function checkAnswer(currentStep, choice) {
         if (currentStep === 3) {
             if (choice === 'A') {
@@ -411,10 +412,16 @@
                 alert('❌ 答錯囉！正確答案是 A 喔～媽媽最近無酸不歡，超愛鹹食 🍟');
             }
             goToStep(5);
+        } else if (currentStep === 5) {
+            if (choice === 'A') {
+                alert('🎉 答對了！沒錯，寶貝在肚子裡就跟我們一起登上「玉山」了！🏔️💪');
+            } else {
+                alert('❌ 答錯囉！正確答案是 A. 玉山！寶貝未出生就先挑戰台灣第一高峰了 🏔️');
+            }
+            goToStep(6);
         }
     }
 
-    // 提交投票資料並顯示揭曉與統計
     function submitVote(gender) {
         const nameInput = document.getElementById('voterName');
         const name = nameInput.value.trim();
@@ -446,14 +453,12 @@
             alert('傳送失敗，請檢查網路連線後再試一次。');
             btnBoy.disabled = false;
             btnGirl.disabled = false;
-            btnBoy.innerText = '👦 我猜男孩';
-            btnGirl.innerText = '👧 我猜女孩';
+            btnBoy.innerText = '👦 我猜Pony';
+            btnGirl.innerText = '👧 我猜波妞';
         });
     }
 
-    // 顯示最終結果與即時數據統計
     function showResultPage() {
-        // 先顯示文字卡片
         document.getElementById('mainContainer').innerHTML = `
             <div class="icon-header">🛸</div>
             <h2 style="color: #00f2fe; margin-bottom: 15px;">謝謝參與！</h2>
@@ -477,7 +482,6 @@
             </div>
         `;
 
-        // 抓取即時統計數據
         fetch(scriptURL)
         .then(response => response.json())
         .then(data => {
