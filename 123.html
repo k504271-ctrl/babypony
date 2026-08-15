@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gender reveal 不管我是男生女生，都會成為最好的寶寶 </title>
+    <title>Gender reveal 森林靜謐系</title>
     <style>
         * {
             box-sizing: border-box;
@@ -24,23 +24,27 @@
             overflow-x: hidden;
         }
 
-        /* 森林飄落葉子與花朵動畫 */
+        /* 森林多樣化植物飄落動畫 */
         .falling-leaf {
             position: absolute;
-            font-size: 26px;
             user-select: none;
             z-index: 2;
             pointer-events: none;
             animation: fall 10s infinite linear;
-            opacity: 0.8;
+            opacity: 0.85;
         }
-        .leaf1 { top: -10%; left: 10%; animation-delay: 0s; }
-        .leaf2 { top: -10%; left: 45%; animation-delay: 3s; animation-duration: 12s; }
-        .leaf3 { top: -10%; left: 80%; animation-delay: 6s; animation-duration: 9s; }
+        .leaf1 { top: -10%; left: 4%; font-size: 24px; animation-duration: 9s; animation-delay: 0s; }
+        .leaf2 { top: -10%; left: 18%; font-size: 28px; animation-duration: 12s; animation-delay: 2s; }
+        .leaf3 { top: -10%; left: 32%; font-size: 22px; animation-duration: 8s; animation-delay: 4.5s; }
+        .leaf4 { top: -10%; left: 50%; font-size: 26px; animation-duration: 13s; animation-delay: 1s; }
+        .leaf5 { top: -10%; left: 66%; font-size: 30px; animation-duration: 10s; animation-delay: 3s; }
+        .leaf6 { top: -10%; left: 82%; font-size: 22px; animation-duration: 11s; animation-delay: 5s; }
+        .leaf7 { top: -10%; left: 93%; font-size: 25px; animation-duration: 9.5s; animation-delay: 1.5s; }
 
         @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.9; }
+            50% { transform: translateY(50vh) rotate(180deg) translateX(18px); opacity: 0.7; }
+            100% { transform: translateY(105vh) rotate(360deg) translateX(-12px); opacity: 0.15; }
         }
 
         /* 山林質感卡片 */
@@ -88,8 +92,16 @@
             font-size: 28px;
             font-weight: 900;
             line-height: 1.3;
-            margin-bottom: 15px;
+            margin-bottom: 6px;
             color: #274c35;
+            letter-spacing: 0.5px;
+        }
+
+        .motto-text {
+            font-size: 14px;
+            color: #588157;
+            font-weight: bold;
+            margin-bottom: 16px;
             letter-spacing: 0.5px;
         }
 
@@ -128,7 +140,7 @@
         }
 
         .main-visual-frame {
-            margin: 15px 0 20px;
+            margin: 10px 0 20px;
             padding: 6px;
             background: #ffffff;
             border: 1px solid #ccd5ae;
@@ -289,20 +301,25 @@
 </head>
 <body>
 
-    <!-- 森林飄落物 -->
+    <!-- 森林豐富植物與花朵飄落區 -->
     <div class="falling-leaf leaf1">🍃 🌸</div>
-    <div class="falling-leaf leaf2">🌲 🌿</div>
-    <div class="falling-leaf leaf3">🌼 🌺</div>
+    <div class="falling-leaf leaf2">🌿 ☘️</div>
+    <div class="falling-leaf leaf3">🌼 🍀</div>
+    <div class="falling-leaf leaf4">🌲 🍁</div>
+    <div class="falling-leaf leaf5">🌺 🌾</div>
+    <div class="falling-leaf leaf6">🍃 🌼</div>
+    <div class="falling-leaf leaf7">🌱 🌸</div>
 
     <div class="main-card" id="mainContainer">
 
         <!-- 關卡 0：首頁 (森林靜謐系) -->
         <div class="step active" id="step0">
-            <div class="forest-badge">🌲 森林靜謐系（噓）</div>
-            <h1 class="main-title">Gender reveal</h1>
+            <div class="forest-badge">🌲 森林靜謐系</div>
+            <h1 class="main-title">🐴 Gender reveal 🐴</h1>
+            <p class="motto-text">不管我是男生女生，都會成為最好的寶寶</p>
             
             <div class="main-visual-frame">
-                <img src="main_visual.jpg" alt="性別揭曉卡" class="main-visual-img" onerror="this.src='https://via.placeholder.com/400x300/e9edc9/3a5a40?text=Gender+Reveal+Card'">
+                <img src="main_visual.jpg" alt="性別揭曉卡" class="main-visual-img" onerror="this.src='https://via.placeholder.com/400x260/e9edc9/3a5a40?text=Boy+?+Girl'">
             </div>
 
             <!-- 開獎倒數計時 -->
@@ -350,7 +367,7 @@
             <p style="font-size: 13px; color: #4a6352;">仔細看看，你覺得寶貝像爸爸還是媽媽？</p>
 
             <div class="main-visual-frame">
-                <img src="ultrasound.jpg" alt="寶貝超音波照片" class="main-visual-img" onerror="this.src='https://via.placeholder.com/400x300/e9edc9/3a5a40?text=Baby+Ultrasound'">
+                <img src="ultrasound.jpg" alt="寶貝超音波照片" class="main-visual-img" onerror="this.src='https://via.placeholder.com/400x260/e9edc9/3a5a40?text=Baby+Ultrasound'">
             </div>
 
             <button class="btn-forest" onclick="goToStep(3)">進入第三關：氣色測驗 ➔</button>
