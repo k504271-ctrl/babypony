@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baby guessing大挑戰</title>
+    <title>Gender reveal 不管我是男生女生，都會成為最好的寶寶 </title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,57 +13,51 @@
 
         body {
             font-family: 'PingFang TC', '微軟正黑體', -apple-system, sans-serif;
-            background: linear-gradient(180deg, #020d18 0%, #00223e 40%, #004b76 80%, #006994 100%);
+            background: linear-gradient(180deg, #1b382b 0%, #2d5a44 40%, #3e6b52 80%, #528265 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            color: #e0f7fa;
+            color: #2e4033;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* 水族館動態背景生物 */
-        .swimming-fish {
+        /* 森林飄落葉子與花朵動畫 */
+        .falling-leaf {
             position: absolute;
-            font-size: 28px;
+            font-size: 26px;
             user-select: none;
             z-index: 2;
             pointer-events: none;
-            animation: swim 12s infinite linear;
+            animation: fall 10s infinite linear;
+            opacity: 0.8;
         }
-        .fish1 { top: 10%; left: -10%; animation-delay: 0s; }
-        .fish2 { top: 25%; right: -10%; animation-direction: reverse; animation-duration: 15s; }
-        .jellyfish { top: 75%; left: 5%; animation: floatJelly 6s infinite ease-in-out; font-size: 32px; }
+        .leaf1 { top: -10%; left: 10%; animation-delay: 0s; }
+        .leaf2 { top: -10%; left: 45%; animation-delay: 3s; animation-duration: 12s; }
+        .leaf3 { top: -10%; left: 80%; animation-delay: 6s; animation-duration: 9s; }
 
-        @keyframes swim {
-            0% { transform: translateX(0) scaleX(1); }
-            50% { transform: translateX(105vw) scaleX(1); }
-            50.1% { transform: translateX(105vw) scaleX(-1); }
-            100% { transform: translateX(-10vw) scaleX(-1); }
-        }
-        @keyframes floatJelly {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
         }
 
-        /* 水族館玻璃主卡片 */
+        /* 山林質感卡片 */
         .main-card {
             width: 100%;
             max-width: 440px;
-            background: rgba(8, 28, 48, 0.88);
-            backdrop-filter: blur(12px);
-            border: 2px solid #00f2fe;
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3), inset 0 0 20px rgba(0, 242, 254, 0.15);
+            background: rgba(253, 251, 247, 0.94);
+            backdrop-filter: blur(10px);
+            border: 2px solid #a3b18a;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
             border-radius: 28px;
-            padding: 35px 22px;
+            padding: 30px 22px;
             text-align: center;
             position: relative;
             z-index: 10;
         }
 
-        /* 關卡切換動畫 */
         .step {
             display: none;
         }
@@ -77,12 +71,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .aquarium-badge {
+        .forest-badge {
             display: inline-block;
-            background: rgba(0, 242, 254, 0.15);
-            border: 1px solid #00f2fe;
-            color: #00f2fe;
-            padding: 5px 15px;
+            background: #e9edc9;
+            border: 1px solid #ccd5ae;
+            color: #3a5a40;
+            padding: 6px 16px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: bold;
@@ -90,47 +84,80 @@
             letter-spacing: 1px;
         }
 
-        .icon-header {
-            font-size: 55px;
-            margin-bottom: 8px;
-            display: inline-block;
-            filter: drop-shadow(0 4px 12px rgba(0, 242, 254, 0.5));
-        }
-
         .main-title {
-            font-size: 35px;
+            font-size: 28px;
             font-weight: 900;
-            line-height: 1.25;
+            line-height: 1.3;
             margin-bottom: 15px;
-            background: linear-gradient(180deg, #ffffff 0%, #4facfe 50%, #00f2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-            letter-spacing: 1px;
+            color: #274c35;
+            letter-spacing: 0.5px;
         }
 
         .subtitle {
-            color: #b2ebf2;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 25px;
+            color: #4a6352;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            text-align: left;
+            background: rgba(233, 237, 201, 0.4);
+            padding: 15px;
+            border-radius: 16px;
+            border-left: 4px solid #588157;
         }
 
-        .btn-ocean {
+        /* 開獎倒數計時器樣式 */
+        .countdown-box {
+            background: #344e41;
+            color: #f4f3ee;
+            padding: 12px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .countdown-title {
+            font-size: 12px;
+            color: #a3b18a;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .countdown-timer {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #e9edc9;
+        }
+
+        .main-visual-frame {
+            margin: 15px 0 20px;
+            padding: 6px;
+            background: #ffffff;
+            border: 1px solid #ccd5ae;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .main-visual-img {
+            width: 100%;
+            max-height: 260px;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .btn-forest {
             width: 100%;
             padding: 16px;
             font-size: 18px;
             font-weight: bold;
-            color: #002244;
-            background: linear-gradient(180deg, #00f2fe 0%, #4facfe 100%);
-            border: 2px solid #ffffff;
+            color: #ffffff;
+            background: linear-gradient(180deg, #588157 0%, #3a5a40 100%);
+            border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0, 242, 254, 0.35);
-            transition: transform 0.15s, filter 0.2s;
+            box-shadow: 0 6px 15px rgba(58, 90, 64, 0.3);
+            transition: transform 0.15s;
             margin-top: 10px;
         }
-        .btn-ocean:active {
+        .btn-forest:active {
             transform: scale(0.97);
         }
 
@@ -138,114 +165,94 @@
             width: 100%;
             padding: 14px 16px;
             margin-bottom: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1.5px solid rgba(0, 242, 254, 0.4);
+            background: #ffffff;
+            border: 1.5px solid #a3b18a;
             border-radius: 16px;
-            color: #ffffff;
+            color: #2e4033;
             font-size: 15px;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s ease;
             line-height: 1.4;
+            font-weight: 500;
         }
         .quiz-option:hover, .quiz-option:active {
-            background: rgba(0, 242, 254, 0.25);
-            border-color: #00f2fe;
+            background: #e9edc9;
+            border-color: #588157;
             transform: translateX(4px);
         }
 
         .story-card {
             text-align: left;
-            background: rgba(255, 255, 255, 0.95);
-            color: #1a2a3a;
+            background: #ffffff;
+            color: #2e4033;
             padding: 15px;
             border-radius: 14px;
             margin-bottom: 15px;
-            border-left: 5px solid #00f2fe;
+            border-left: 5px solid #588157;
         }
-        .story-card.boy { border-left-color: #4facfe; }
-        .story-card.girl { border-left-color: #ff85a2; }
-        .story-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .story-title.boy { color: #0288d1; }
-        .story-title.girl { color: #d81b60; }
-
-        .ultrasound-frame {
-            margin: 15px 0 20px;
-            padding: 8px;
-            background: #ffffff;
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
-        .ultrasound-img {
-            width: 100%;
-            max-height: 280px;
-            object-fit: cover;
-            border-radius: 8px;
-            display: block;
-        }
+        .story-card.pony { border-left-color: #52b788; }
+        .story-card.ponyo { border-left-color: #ff9b85; }
 
         input {
             width: 100%;
             padding: 14px;
             font-size: 16px;
             border-radius: 12px;
-            border: 2px solid #00f2fe;
-            background: rgba(255, 255, 255, 0.95);
-            color: #002244;
+            border: 2px solid #a3b18a;
+            background: #ffffff;
+            color: #2e4033;
             margin-bottom: 20px;
             outline: none;
             text-align: center;
             font-weight: bold;
         }
+
         .btn-vote-group {
             display: flex;
             gap: 12px;
         }
-        .btn-boy {
+        .btn-pony {
             flex: 1;
             padding: 15px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
-            color: #002244;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
-        }
-        .btn-girl {
-            flex: 1;
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            background: linear-gradient(180deg, #ff85a2 0%, #f72585 100%);
+            background: linear-gradient(180deg, #74c69d 0%, #52b788 100%);
             color: #ffffff;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(247, 37, 133, 0.4);
+            box-shadow: 0 4px 12px rgba(82, 183, 136, 0.35);
         }
-        .btn-boy:disabled, .btn-girl:disabled {
+        .btn-ponyo {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(180deg, #ffb5a7 0%, #ff9b85 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 155, 133, 0.35);
+        }
+        .btn-pony:disabled, .btn-ponyo:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
 
         .result-card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 2px dashed #00f2fe;
+            background: #ffffff;
+            border: 2px dashed #a3b18a;
             border-radius: 18px;
             padding: 20px;
             margin-top: 15px;
             line-height: 1.7;
             font-size: 15px;
-            color: #e0f7fa;
+            color: #2e4033;
         }
         .highlight-text {
-            color: #00f2fe;
+            color: #3a5a40;
             font-size: 20px;
             font-weight: bold;
         }
@@ -253,7 +260,7 @@
         .stats-box {
             margin-top: 20px;
             padding-top: 15px;
-            border-top: 1px dashed rgba(0, 242, 254, 0.4);
+            border-top: 1px dashed #a3b18a;
             text-align: left;
         }
         .stats-text {
@@ -264,16 +271,16 @@
             margin-bottom: 8px;
         }
         .progress-bg {
-            background-color: #ff85a2;
+            background-color: #ffb5a7;
             border-radius: 20px;
             height: 18px;
             width: 100%;
             overflow: hidden;
             display: flex;
-            border: 1px solid #00f2fe;
+            border: 1px solid #a3b18a;
         }
         .progress-fill {
-            background-color: #4facfe;
+            background-color: #74c69d;
             height: 100%;
             width: 50%;
             transition: width 0.6s ease-in-out;
@@ -282,63 +289,77 @@
 </head>
 <body>
 
-    <div class="swimming-fish fish1">🐠 🐡 🪸</div>
-    <div class="swimming-fish fish2">🐬 🦈 🫧</div>
-    <div class="swimming-fish jellyfish">🪼</div>
+    <!-- 森林飄落物 -->
+    <div class="falling-leaf leaf1">🍃 🌸</div>
+    <div class="falling-leaf leaf2">🌲 🌿</div>
+    <div class="falling-leaf leaf3">🌼 🌺</div>
 
     <div class="main-card" id="mainContainer">
 
-        <!-- 關卡 0：首頁 -->
+        <!-- 關卡 0：首頁 (森林靜謐系) -->
         <div class="step active" id="step0">
-            <div class="aquarium-badge">🏛️ 海底水族館冒險</div>
-            <br>
-            <div class="icon-header">🐠</div>
-            <h1 class="main-title">Baby<br>guessing大挑戰</h1>
-            <p class="subtitle">歡迎來到海底水族館！<br>連續探索關卡，一起猜猜寶貝的性別吧 🫧</p>
+            <div class="forest-badge">🌲 森林靜謐系（噓）</div>
+            <h1 class="main-title">Gender reveal</h1>
             
-            <button class="btn-ocean" onclick="goToStep(1)">開始潛水探索 🤿</button>
+            <div class="main-visual-frame">
+                <img src="main_visual.jpg" alt="性別揭曉卡" class="main-visual-img" onerror="this.src='https://via.placeholder.com/400x300/e9edc9/3a5a40?text=Gender+Reveal+Card'">
+            </div>
+
+            <!-- 開獎倒數計時 -->
+            <div class="countdown-box">
+                <div class="countdown-title">⏳ 距離打開性別卡倒數</div>
+                <div class="countdown-timer" id="timerDisplay">載入計時中...</div>
+            </div>
+
+            <div class="subtitle">
+                我們的寶貝已經來到第16週嘍，邀請大家一起分享我們簡單的快樂～<br><br>
+                我們在 <strong>8/16 晚上 8:00</strong> 會打開這張醫生寫的性別卡～好期待～～<br><br>
+                不管是爸爸前世的掌上明珠 👧，還是媽媽小情人 👦 我們都引頸期盼 ❤️
+            </div>
+            
+            <button class="btn-forest" onclick="goToStep(1)">進入森林小闖關 🌿</button>
         </div>
 
         <!-- 關卡 1：性別故事 -->
         <div class="step" id="step1">
-            <h2 style="color: #00f2fe; margin-bottom: 10px;">✨ 第一關：性別符號由來</h2>
-            <p style="font-size: 13px; color: #b2ebf2; margin-bottom: 15px;">
+            <h2 style="color: #274c35; margin-bottom: 10px;">✨ 第一關：性別符號由來</h2>
+            <p style="font-size: 13px; color: #4a6352; margin-bottom: 15px;">
                 性別符號（♂ 與 ♀）最早源自古希臘羅馬的天文與神話符號。
             </p>
 
-            <div class="story-card boy">
-                <div class="story-title boy">♂ 男性符號</div>
+            <div class="story-card pony">
+                <div style="font-size: 16px; font-weight: bold; color: #2d6a4f; margin-bottom: 5px;">♂ 男性符號</div>
                 <p style="font-size: 13px; line-height: 1.5;">
                     圓圈加上向上的箭頭。代表戰神瑪爾斯（Mars）的長矛與盾牌，象徵剛強與力量。
                 </p>
             </div>
 
-            <div class="story-card girl">
-                <div class="story-title girl">♀ 女性符號</div>
+            <div class="story-card ponyo">
+                <div style="font-size: 16px; font-weight: bold; color: #e07a5f; margin-bottom: 5px;">♀ 女性符號</div>
                 <p style="font-size: 13px; line-height: 1.5;">
                     圓圈下方加上十字。代表愛與美之女神維娜斯（Venus）手持的金色圓鏡，象徵美麗與柔和。
                 </p>
             </div>
 
-            <button class="btn-ocean" onclick="goToStep(2)">下一關：超音波照片 ➔</button>
+            <button class="btn-forest" onclick="goToStep(2)">下一關：超音波照片 ➔</button>
         </div>
 
         <!-- 關卡 2：超音波照片 -->
         <div class="step" id="step2">
-            <h2 style="color: #00f2fe; margin-bottom: 10px;">📸 第二關：寶貝超音波照片</h2>
-            <p style="font-size: 13px; color: #b2ebf2;">仔細看看，你覺得寶貝像爸爸還是媽媽？</p>
+            <h2 style="color: #274c35; margin-bottom: 10px;">📸 第二關：寶貝超音波照片</h2>
+            <p style="font-size: 13px; color: #4a6352;">仔細看看，你覺得寶貝像爸爸還是媽媽？</p>
 
-            <div class="ultrasound-frame">
-                <img src="ultrasound.jpg" alt="寶貝超音波照片" class="ultrasound-img" onerror="this.src='https://via.placeholder.com/400x300/002244/FFFFFF?text=Baby+Ultrasound'">
+            <div class="main-visual-frame">
+                <img src="ultrasound.jpg" alt="寶貝超音波照片" class="main-visual-img" onerror="this.src='https://via.placeholder.com/400x300/e9edc9/3a5a40?text=Baby+Ultrasound'">
             </div>
 
-            <button class="btn-ocean" onclick="goToStep(3)">進入第三關：氣色測驗 ➔</button>
+            <button class="btn-forest" onclick="goToStep(3)">進入第三關：氣色測驗 ➔</button>
         </div>
 
-        <!-- 關卡 3：媽媽的氣色變化 -->
+        <!-- 關卡 3：媽媽的氣色變化 (正確答案：C) -->
         <div class="step" id="step3">
-            <h2 style="color: #00f2fe; margin-bottom: 10px;">🌸 第三關：觀察媽媽的狀態</h2>
-            <p style="font-size: 15px; font-weight: bold; color: #ffffff; margin-bottom: 18px;">
+            <h2 style="color: #274c35; margin-bottom: 10px;">🌸 第三關：觀察媽媽的狀態</h2>
+            <p style="font-size: 15px; font-weight: bold; color: #2e4033; margin-bottom: 18px;">
                 媽媽最近的皮膚與氣色發生了什麼變化？
             </p>
 
@@ -349,8 +370,8 @@
 
         <!-- 關卡 4：媽媽的飲食口味 -->
         <div class="step" id="step4">
-            <h2 style="color: #00f2fe; margin-bottom: 10px;"> 第四關：媽媽的神秘胃口</h2>
-            <p style="font-size: 15px; font-weight: bold; color: #ffffff; margin-bottom: 18px;">
+            <h2 style="color: #274c35; margin-bottom: 10px;">🍟 第四關：媽媽的神秘胃口</h2>
+            <p style="font-size: 15px; font-weight: bold; color: #2e4033; margin-bottom: 18px;">
                 媽媽最近瘋狂渴望吃什麼口味的食物？
             </p>
 
@@ -361,8 +382,8 @@
 
         <!-- 關卡 5：爬山經歷 (正確答案：A. 玉山) -->
         <div class="step" id="step5">
-            <h2 style="color: #00f2fe; margin-bottom: 10px;">⛰️ 第五關：小小登山客</h2>
-            <p style="font-size: 15px; font-weight: bold; color: #ffffff; margin-bottom: 18px;">
+            <h2 style="color: #274c35; margin-bottom: 10px;">⛰️ 第五關：小小登山客</h2>
+            <p style="font-size: 15px; font-weight: bold; color: #2e4033; margin-bottom: 18px;">
                 寶貝跟我們一起去爬過什麼山？
             </p>
 
@@ -373,14 +394,14 @@
 
         <!-- 關卡 6：終極預測與投票 -->
         <div class="step" id="step6">
-            <h2 style="color: #00f2fe; margin-bottom: 10px;">👶 終極預測：猜猜性別</h2>
-            <p style="font-size: 14px; color: #b2ebf2; margin-bottom: 18px;">請留下你的名字，並選出你心中的預測：</p>
+            <h2 style="color: #274c35; margin-bottom: 10px;">👶 終極預測：猜猜性別</h2>
+            <p style="font-size: 14px; color: #4a6352; margin-bottom: 18px;">請留下你的名字，並選出你心中的預測：</p>
             
             <input type="text" id="voterName" placeholder="請輸入你的名字 (如：王小明)">
             
             <div class="btn-vote-group">
-                <button class="btn-boy" onclick="submitVote('男孩')">👦 我猜男孩</button>
-                <button class="btn-girl" onclick="submitVote('女孩')">👧 我猜女孩</button>
+                <button class="btn-pony" onclick="submitVote('男孩', '波尼')">🐴 我猜波尼</button>
+                <button class="btn-ponyo" onclick="submitVote('女孩', '波妞')">🫧 我猜波妞</button>
             </div>
         </div>
 
@@ -388,6 +409,35 @@
 
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxhcSVQw07jFopl2D0pMyykRXj1Hz0pJKSSyIVi6JLC497F9I-8_eGNxsu3e3jM6ViPjg/exec';
+
+    // 8/16 晚上 8:00 倒數計時邏輯 (預設 2026年 8月 16日 20:00:00)
+    function updateCountdown() {
+        const targetDate = new Date("2026-08-16T20:00:00+08:00").getTime();
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        const timerEl = document.getElementById("timerDisplay");
+        const timerResultEl = document.getElementById("timerDisplayResult");
+
+        if (diff <= 0) {
+            const finishedText = "🎉 已到開獎時間！🎉";
+            if (timerEl) timerEl.innerText = finishedText;
+            if (timerResultEl) timerResultEl.innerText = finishedText;
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        const timeString = `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
+        if (timerEl) timerEl.innerText = timeString;
+        if (timerResultEl) timerResultEl.innerText = timeString;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
     function goToStep(stepNumber) {
         document.querySelectorAll('.step').forEach(step => {
@@ -399,10 +449,10 @@
 
     function checkAnswer(currentStep, choice) {
         if (currentStep === 3) {
-            if (choice === 'A') {
-                alert('🎉 答對了！媽媽最近確實容光煥發，自帶仙女光環 ✨');
+            if (choice === 'C') {
+                alert('🎉 答對了！媽媽氣色維持得很好，跟孕前差不多喔！😐');
             } else {
-                alert('❌ 答錯囉！正確答案是 A 喔～媽媽最近容光煥發 ✨');
+                alert('❌ 答錯囉！正確答案是 C 喔～媽媽跟孕前差不多！');
             }
             goToStep(4);
         } else if (currentStep === 4) {
@@ -422,7 +472,7 @@
         }
     }
 
-    function submitVote(gender) {
+    function submitVote(genderCode, displayName) {
         const nameInput = document.getElementById('voterName');
         const name = nameInput.value.trim();
         
@@ -431,56 +481,63 @@
             return;
         }
         
-        const btnBoy = document.querySelector('.btn-boy');
-        const btnGirl = document.querySelector('.btn-girl');
-        btnBoy.disabled = true;
-        btnGirl.disabled = true;
-        btnBoy.innerText = '傳送中...';
-        btnGirl.innerText = '傳送中...';
+        const btnPony = document.querySelector('.btn-pony');
+        const btnPonyo = document.querySelector('.btn-ponyo');
+        btnPony.disabled = true;
+        btnPonyo.disabled = true;
+        btnPony.innerText = '傳送中...';
+        btnPonyo.innerText = '傳送中...';
 
         fetch(scriptURL, {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ name: name, gender: gender })
+            body: JSON.stringify({ name: name, gender: genderCode })
         })
         .then(response => response.text())
         .then(text => {
-            alert(`謝謝 ${name}！你預測寶寶是「${gender}」🎉`);
+            alert(`謝謝 ${name}！你預測寶寶是「${displayName}」🎉`);
             showResultPage();
         })
         .catch(error => {
             console.error('Error!', error.message);
             alert('傳送失敗，請檢查網路連線後再試一次。');
-            btnBoy.disabled = false;
-            btnGirl.disabled = false;
-            btnBoy.innerText = '👦 我猜Pony';
-            btnGirl.innerText = '👧 我猜波妞';
+            btnPony.disabled = false;
+            btnPonyo.disabled = false;
+            btnPony.innerText = '🐴 我猜波尼';
+            btnPonyo.innerText = '🫧 我猜波妞';
         });
     }
 
     function showResultPage() {
         document.getElementById('mainContainer').innerHTML = `
-            <div class="icon-header">🛸</div>
-            <h2 style="color: #00f2fe; margin-bottom: 15px;">謝謝參與！</h2>
+            <div class="forest-badge">🌲 感謝參與預測</div>
+            <h2 style="color: #274c35; margin-bottom: 15px;">倒數揭曉中！</h2>
             
+            <div class="countdown-box">
+                <div class="countdown-title">⏳ 8/16 晚上 8:00 開獎倒數</div>
+                <div class="countdown-timer" id="timerDisplayResult">載入計時中...</div>
+            </div>
+
             <div class="result-card">
                 <p class="highlight-text">我的預產期是 1/30 喔！🍼</p>
                 <br>
                 <p>會是個大家公認充滿創意與獨特見解的寶貝<br><strong>（外星寶寶 👽✨）</strong></p>
 
                 <div class="stats-box">
-                    <h4 style="color: #00f2fe; margin-bottom: 10px; text-align: center;">📊 目前預測投票戰況</h4>
+                    <h4 style="color: #274c35; margin-bottom: 10px; text-align: center;">📊 目前預測投票戰況</h4>
                     <div class="stats-text">
-                        <span style="color: #4facfe;" id="boyStat">👦 男孩: 載入中...</span>
-                        <span style="color: #ff85a2;" id="girlStat">👧 女孩: 載入中...</span>
+                        <span style="color: #2d6a4f;" id="boyStat">🐴 波尼: 載入中...</span>
+                        <span style="color: #e07a5f;" id="girlStat">🫧 波妞: 載入中...</span>
                     </div>
                     <div class="progress-bg">
                         <div class="progress-fill" id="boyBar"></div>
                     </div>
-                    <p style="margin-top: 8px; font-size: 12px; color: #b2ebf2; text-align: center;" id="totalCount">累積投票人次：- 人</p>
+                    <p style="margin-top: 8px; font-size: 12px; color: #4a6352; text-align: center;" id="totalCount">累積投票人次：- 人</p>
                 </div>
             </div>
         `;
+
+        updateCountdown();
 
         fetch(scriptURL)
         .then(response => response.json())
@@ -490,25 +547,24 @@
             const girlCount = data.girl;
 
             if (total === 0) {
-                document.getElementById('boyStat').innerText = '👦 男孩: 0 票';
-                document.getElementById('girlStat').innerText = '👧 女孩: 0 票';
+                document.getElementById('boyStat').innerText = '🐴 波尼: 0 票';
+                document.getElementById('girlStat').innerText = '🫧 波妞: 0 票';
                 document.getElementById('boyBar').style.width = '50%';
                 document.getElementById('totalCount').innerText = '你是第一個投票的人喔！';
                 return;
             }
 
             const boyPercent = Math.round((boyCount / total) * 100);
-            const girlPercent = 100 - boyPercent;
 
-            document.getElementById('boyStat').innerText = `👦 男孩: ${boyCount} 票 (${boyPercent}%)`;
-            document.getElementById('girlStat').innerText = `👧 女孩: ${girlCount} 票 (${girlPercent}%)`;
+            document.getElementById('boyStat').innerText = `🐴 波尼: ${boyCount} 票 (${boyPercent}%)`;
+            document.getElementById('girlStat').innerText = `🫧 波妞: ${girlCount} 票 (${100 - boyPercent}%)`;
             document.getElementById('boyBar').style.width = `${boyPercent}%`;
             document.getElementById('totalCount').innerText = `累積投票人次：${total} 人`;
         })
         .catch(error => {
             console.error('統計讀取失敗：', error);
-            document.getElementById('boyStat').innerText = '👦 男孩: - 票';
-            document.getElementById('girlStat').innerText = '👧 女孩: - 票';
+            document.getElementById('boyStat').innerText = '🐴 波尼: - 票';
+            document.getElementById('girlStat').innerText = '🫧 波妞: - 票';
             document.getElementById('totalCount').innerText = '暫時無法載入即時統計';
         });
     }
